@@ -9,8 +9,9 @@ module PP::MIME::Base64 {
         my Str $rc = '';
         my Str $padding_suffix = '';
 
+        my $line_break_counter = 0;
         for $b.list -> $byte1, $byte2?, $byte3? {
-            $rc ~= @mapping[ $byte1 +& 0b1111100 +> 2 ];
+            $rc ~= @mapping[ $byte1 +& 0b11111100 +> 2 ];
             if $byte2.defined {
                 $rc ~= @mapping[
                         $byte1 +&  0b00000011 +< 4 +
@@ -31,7 +32,9 @@ module PP::MIME::Base64 {
             else {
                 $rc ~= @mapping[ $byte1 +&  0b00000011 +< 4 ];
                 $padding_suffix ~= '==';
-            }                
+            }
+            # more precise research on newline later
+            if ++$line_break_counter % 19 == 0 { $rc ~= "\n" }
         } 
 
         return $rc ~ $padding_suffix;
@@ -53,7 +56,7 @@ module PP::MIME::Base64 {
         # should be able to pre-allocate this buffer some day
         my Int @rc;
 
-        for $s.substr(0, * -$zero_pad_count).comb ->
+        for $s.substr(0, * -$zero_pad_count).comb(/\N/) ->
                 $left, $left_middle?, $right_middle?, $right? {
 
             my Int ($left_i, $left_middle_i, $right_middle_i, $right_i) =
@@ -75,11 +78,11 @@ module PP::MIME::Base64 {
         return Buf.new(@rc);
     }
 
-    sub encode_base64_str(Str $s, Str $e = 'utf8') is export {
+    sub encode_base64_str(Str $s, Str $e = 'utf-8') is export {
         encode_base64($s.encode($e));
     }
 
-    sub decode_base64_str(Str $s, Str $d = 'utf8') is export {
+    sub decode_base64_str(Str $s, Str $d = 'utf-8') is export {
         decode_base64($s).decode($d);
     }
 
