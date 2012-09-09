@@ -5,6 +5,11 @@ module PP::MIME::Base64 {
     # think about making this an our constant too some day
     my %reverse_mapping = (^64).map: { ; @mapping[ $_ ] => $_ };
 
+    # rfc 4648 gives http://josefsson.org/base-encoding/ as almost
+    # but not quite a reference implementation.  I don't follow
+    # that implementation here but note it for anyone considering
+    # a parrot or external library implementation
+
     our Str sub encode_base64(Buf $b, Str $eol = "\n") is export {
         my Str $rc = '';
         my Str $padding_suffix = '';
