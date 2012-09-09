@@ -26,3 +26,7 @@ is decode_base64_str('6WNyYW4=', 'latin-1'), $screen_w_accent_e, 'latin-1 string
 is encode_base64_str($screen_w_accent_e), 'w6ljcmFu', 'utf-8 string encoding test';
 is decode_base64_str('w6ljcmFu'), $screen_w_accent_e, 'utf-8 string decoding test';
 
+my Buf $camelia_ico = slurp("data/camelia-favicon.ico", :bin);
+my Str $camelia_b64 = slurp("data/camelia-favicon.b64");
+is encode_base64($camelia_ico), $camelia_b64.chomp, 'binary img encode test';
+ok decode_base64($camelia_b64) eq $camelia_ico, 'binary img decode test';

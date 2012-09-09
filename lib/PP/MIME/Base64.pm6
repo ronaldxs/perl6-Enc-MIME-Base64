@@ -43,34 +43,24 @@ module PP::MIME::Base64 {
     # Greatly wondering whether building everything in a list of Int
     # and then newing the Buf is the most efficient way
     our Buf sub decode_base64(Str $s) is export {
-        my $zero_pad_count = 0;
-
-        if $s.chars > 2 {
-            for 1, 2 -> $i {
-                if $s.substr(* -$i, 1) eq '=' { $zero_pad_count++ }
-            }
-        }
-
-        my $result_len = 3 * ($s.chars - $zero_pad_count) / 4 - $zero_pad_count;
-
-        # should be able to pre-allocate this buffer some day
         my Int @rc;
+        my Str $end_pad = ($s ~~ /\= ** 1..2\s*/).Str;
 
-        for $s.substr(0, * -$zero_pad_count).comb(/\N/) ->
+        for $s.substr(0, * -$end_pad.chars).comb(/\N/) ->
                 $left, $left_middle?, $right_middle?, $right? {
 
             my Int ($left_i, $left_middle_i, $right_middle_i, $right_i) =
-                map     { .defined ?? %reverse_mapping{ $_ } !! Int.new },
+                map     { .defined ?? %reverse_mapping{ $_ } !! 0 },
                         $left, $left_middle, $right_middle, $right;
 
             @rc.push( $left_i +< 2 + $left_middle_i +& 0b00110000 +> 4 );
-            if @rc.elems < $result_len {
+            if $right_middle.defined {
                 @rc.push(
                     $left_middle_i +& 0b00001111 +< 4 +
                     $right_middle_i +& 0b00111100 +> 2
                 );
             }
-            if @rc.elems < $result_len {
+            if $right.defined {
                 @rc.push($right_middle_i +& 0b00000011 +< 6 + $right_i);
             }
         }
