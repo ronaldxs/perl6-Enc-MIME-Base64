@@ -5,7 +5,7 @@ use v6;
 use Test;
 use PP::MIME::Base64;
 
-plan 14;
+plan 16;
 
 is encode_base64_str(''), '', 'Encoding the empty string';
 is encode_base64_str('f'), 'Zg==', 'Encoding "f"';
@@ -23,3 +23,9 @@ is decode_base64_str('Zm9vYg=='), 'foob', 'Decoding "foob"';
 is decode_base64_str('Zm9vYmE='), 'fooba', 'Decoding "fooba"';
 is decode_base64_str('Zm9vYmFy'), 'foobar', 'Decoding "foobar"';
 
+# not from RFC test vector but one odd test case from w3 HTTP spec and
+# perl 5 test suite
+is encode_base64_str('Aladdin:open sesame'),
+    'QWxhZGRpbjpvcGVuIHNlc2FtZQ==', 'Encoding w3 http spec test open sesame';
+is decode_base64_str('QWxhZGRpbjpvcGVuIHNlc2FtZQ=='), 'Aladdin:open sesame', 
+    'Decoding w3 http spec test open sesame';
