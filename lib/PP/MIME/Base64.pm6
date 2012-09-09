@@ -5,7 +5,7 @@ module PP::MIME::Base64 {
     # think about making this an our constant too some day
     my %reverse_mapping = (^64).map: { ; @mapping[ $_ ] => $_ };
 
-    sub encode_base64(Buf $b --> Str) is export {
+    our Str sub encode_base64(Buf $b, Str $eol = "\n") is export {
         my Str $rc = '';
         my Str $padding_suffix = '';
 
@@ -34,7 +34,7 @@ module PP::MIME::Base64 {
                 $padding_suffix ~= '==';
             }
             # more precise research on newline later
-            if ++$line_break_counter % 19 == 0 { $rc ~= "\n" }
+            if ++$line_break_counter % 19 == 0 { $rc ~= $eol}
         } 
 
         return $rc ~ $padding_suffix;
@@ -42,7 +42,7 @@ module PP::MIME::Base64 {
 
     # Greatly wondering whether building everything in a list of Int
     # and then newing the Buf is the most efficient way
-    sub decode_base64(Str $s --> Buf) is export {
+    our Buf sub decode_base64(Str $s) is export {
         my $zero_pad_count = 0;
 
         if $s.chars > 2 {
@@ -78,11 +78,11 @@ module PP::MIME::Base64 {
         return Buf.new(@rc);
     }
 
-    sub encode_base64_str(Str $s, Str $e = 'utf-8') is export {
-        encode_base64($s.encode($e));
+    our Str sub encode_base64_str(Str $s, Str $e = 'utf-8', :$eol = "\n") is export {
+        encode_base64($s.encode($e), $eol);
     }
 
-    sub decode_base64_str(Str $s, Str $d = 'utf-8') is export {
+    our Str sub decode_base64_str(Str $s, Str $d = 'utf-8') is export {
         decode_base64($s).decode($d);
     }
 
