@@ -31,11 +31,11 @@ MIME/Base64 encode a Buf of arbitrary binary data.  Return value is a Str. By de
 
 ## `decode_base64(Str $b64)`
 
-Decode a string with MIME/Base64 encoded data into a Buf
+Decode a string with MIME/Base64 encoded data into a Buf.
 
 ## `encode_base64_str(Str $s, Str $e = 'utf-8', :eol = "\n")`
 
 To make a common case easy this routine Mime/Base64 encodes a string for you.  The result can vary based on your chosen string byte encoding eg utf-8(default) or iso-8859-1/latin-1 or ascii. 
 
 ## `decode_base64_str(Str $s, Str $d = 'utf-8')`
-To make another common case easy this routine takes a MIME/Base64 encoded string and, after decoding the Base64 into a byte stream Buf, returns a string based on the provided byte stream encoding which defaults to utf-8.
+To make another common case easy this routine takes a MIME/Base64 encoded string and, after decoding the Base64 into a byte stream Buf, returns a string based on the provided string byte encoding which defaults to utf-8.
