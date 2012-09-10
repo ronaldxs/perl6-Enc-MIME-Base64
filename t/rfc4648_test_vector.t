@@ -3,7 +3,7 @@ use v6;
 # from http://tools.ietf.org/html/rfc4648#section-10
 
 use Test;
-use PP::MIME::Base64;
+use PP::Enc::MIME::Base64;
 
 plan 16;
 

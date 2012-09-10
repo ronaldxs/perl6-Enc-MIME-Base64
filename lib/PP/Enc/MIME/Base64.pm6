@@ -1,4 +1,4 @@
-module PP::MIME::Base64:auth<ronaldxs>:ver<0.01> {
+module PP::Enc::MIME::Base64:auth<ronaldxs>:ver<0.01> {
     our Str constant @mapping =
         flat 'A' .. 'Z', 'a' .. 'z', '0' .. '9', '+', '/';
 

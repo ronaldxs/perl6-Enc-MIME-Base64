@@ -1,4 +1,4 @@
-perl6-MIME-Base64
+perl6-Enc-MIME-Base64
 =================
 
 MIME Base64 encoding for Perl6 that understands Base64 is an encoding for binary data.
@@ -6,7 +6,7 @@ MIME Base64 encoding for Perl6 that understands Base64 is an encoding for binary
 # Synopsis
 
 ```perl
-use PP::MIME::Base64;
+use PP::Enc::MIME::Base64;
 
 my $http_auth_send = encode_base64_str('Aladdin:open sesame');
 my $http_auth_recv = decode_base64_str('QWxhZGRpbjpvcGVuIHNlc2FtZQ==');
