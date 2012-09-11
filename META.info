@@ -5,5 +5,5 @@
     "depends"     : [ ],
     "author"      : "Ron Schmidt",
     "authority"   : "ronaldxs",
-    "source-url"  : "git://github.com/ronaldxs/perl6-MIME-Base64.git"
+    "source-url"  : "git://github.com/ronaldxs/perl6-Enc-MIME-Base64.git"
 }
