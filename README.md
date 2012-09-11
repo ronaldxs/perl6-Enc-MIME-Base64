@@ -39,3 +39,14 @@ To make a common case easy this routine Mime/Base64 encodes a string for you.  T
 
 ## `decode_base64_str(Str $s, Str $d = 'utf-8')`
 To make another common case easy this routine takes a MIME/Base64 encoded string and, after decoding the Base64 into a byte stream Buf, returns a string based on the provided string byte encoding which defaults to utf-8.
+
+# Why another MIME Base64 module
+
+This pure Perl6 implementation is slower but, I believe, more correct in a number of ways.  The existing MIME::Base64 depends on the parrot implementation of the same library which currently has some issues including #826, #814 and #813 on git.  The correctness advantages of this module include:
+
+* Designed to encode/decode binary data with easy wrapper functions for strings.
+* Many more tests than the parrot dependent module.  Technically not as many individual tests as the parrot library but that's just because the parrot library tests every individual byte value from 0 to 255 which may not be that useful given how base64 combines bits from adjacent bytes.  I believe that my test suite is actually better than that of the parrot library too.
+* Default wrapping of Base64 encoding with newlines every 76 characters as required by MIME.  Configurable and can be turned off for URI data.
+* Better interface with exported functions.
+
+Anyway ... I hope you like it.
