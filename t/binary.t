@@ -18,7 +18,8 @@ ok decode_base64('/w==') eq Buf.new(255), 'decode Test on byte value 255';
 my Buf $camelia_ico = slurp(
     $?FILE.path.directory ~ '/data/camelia-favicon.ico', :bin
 );
-my Str $camelia_b64 = slurp(
+# .b64 file generated from .ico file with gnu base64 program
+my Str $camelia_b64 = slurp( 
     $?FILE.path.directory ~ '/data/camelia-favicon.b64'
 );
 is encode_base64($camelia_ico), $camelia_b64.chomp, 'binary img encode test';

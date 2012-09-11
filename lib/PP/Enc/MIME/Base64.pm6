@@ -10,6 +10,7 @@ module PP::Enc::MIME::Base64:auth<ronaldxs>:ver<0.01> {
     # that implementation here but note it for anyone considering
     # a parrot or external library implementation
 
+    ######################################################################
     our Str sub encode_base64(Buf $b, Str $eol = "\n") is export {
         my Str $rc = '';
         my Str $padding_suffix = '';
@@ -45,8 +46,10 @@ module PP::Enc::MIME::Base64:auth<ronaldxs>:ver<0.01> {
         return $rc ~ $padding_suffix;
     }
 
+    ######################################################################
     # Greatly wondering whether building everything in a list of Int
     # and then newing the Buf is the most efficient way
+    ######################################################################
     our Buf sub decode_base64(Str $s) is export {
         my Int @rc;
         my Str $end_pad = ($s ~~ /\= ** 1..2\s*/).Str;
@@ -73,11 +76,17 @@ module PP::Enc::MIME::Base64:auth<ronaldxs>:ver<0.01> {
         return Buf.new(@rc);
     }
 
-    our Str sub encode_base64_str(Str $s, Str $e = 'utf-8', :$eol = "\n") is export {
+    ######################################################################
+    our Str sub encode_base64_str(Str $s, Str $e = 'utf-8', :$eol = "\n")
+        is export
+    {
         encode_base64($s.encode($e), $eol);
     }
 
-    our Str sub decode_base64_str(Str $s, Str $d = 'utf-8') is export {
+    ######################################################################
+    our Str sub decode_base64_str(Str $s, Str $d = 'utf-8')
+        is export
+    {
         decode_base64($s).decode($d);
     }
 
