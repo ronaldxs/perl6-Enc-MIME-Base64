@@ -1,7 +1,7 @@
 {
     "name"        : "Enc::MIME::Base64",
     "version"     : "0.01",
-    "description" : "MIME Base64 encoding for Perl 6 that understands Base64 is an encoding for binary data.",
+    "description" : "MIME Base64 encoding for Perl 6 binary data and strings using any string encoding.",
     "depends"     : [ ],
     "author"      : "Ron Schmidt",
     "authority"   : "ronaldxs",
