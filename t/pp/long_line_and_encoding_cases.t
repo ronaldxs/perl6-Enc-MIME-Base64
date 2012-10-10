@@ -1,15 +1,20 @@
 use v6;
 
 use Test;
-use Enc::MIME::Base64;
+use PP::Enc::MIME::Base64;
 
-plan 6;
+plan 7;
 
 is encode_base64_str(
     'This is a long line whose base64 encoding should be broken into multiple lines as required by MIME.'),
 "VGhpcyBpcyBhIGxvbmcgbGluZSB3aG9zZSBiYXNlNjQgZW5jb2Rpbmcgc2hvdWxkIGJlIGJyb2tl
 biBpbnRvIG11bHRpcGxlIGxpbmVzIGFzIHJlcXVpcmVkIGJ5IE1JTUUu",
     'Encode Break up long line test';
+
+is encode_base64_str(
+    'This is a long line whose base64 encoding should be broken into multiple lines as required by MIME.', eol => ''),
+"VGhpcyBpcyBhIGxvbmcgbGluZSB3aG9zZSBiYXNlNjQgZW5jb2Rpbmcgc2hvdWxkIGJlIGJyb2tlbiBpbnRvIG11bHRpcGxlIGxpbmVzIGFzIHJlcXVpcmVkIGJ5IE1JTUUu",
+    'Encode Break up long line test with breakup override';
 
 is decode_base64_str(
 "VGhpcyBpcyBhIGxvbmcgbGluZSB3aG9zZSBiYXNlNjQgZW5jb2Rpbmcgc2hvdWxkIGJlIGJyb2tl

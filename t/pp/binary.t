@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-use Enc::MIME::Base64;
+use PP::Enc::MIME::Base64;
 
 plan 8;
 
@@ -24,9 +24,3 @@ my Str $camelia_b64 = slurp(
 );
 is encode_base64($camelia_ico), $camelia_b64.chomp, 'binary img encode test';
 ok decode_base64($camelia_b64) eq $camelia_ico, 'binary img decode test';
-my $x = decode_base64($camelia_b64);
-say $x.bytes;
-say $camelia_ico.bytes;
-loop (my $i = 0; $i < $x.bytes; $i++) {
-    if $x[$i] != $camelia_ico[$i] { say $i }
-}

@@ -1,7 +1,7 @@
 use v6;
 
 use Test;
-use Enc::MIME::Base64;
+use PP::Enc::MIME::Base64;
 
 plan 18;
 
